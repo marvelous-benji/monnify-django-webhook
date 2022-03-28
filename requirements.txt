@@ -1,0 +1,3 @@
+black=22.1.0
+Django==3.2
+djangorestframework==3.13.1
