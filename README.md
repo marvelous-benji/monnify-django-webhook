@@ -5,13 +5,15 @@ A sample code that show how to verify monnify webhook
 
 ### Table of Contents
 
-- [Technologies](#Technologies)
-- [Description](#Description)
-- [Installation](#Installation)
-- [Test](#Test)
-- [SetUp](#SetUp)
-- [Clarification](#Clarification)
-- [Todo](#Todo)
+- [monnify-django-webhook](#monnify-django-webhook)
+    - [Table of Contents](#table-of-contents)
+      - [Technologies](#technologies)
+  - [Installation](#installation)
+      - [Already Have Python3 Installed](#already-have-python3-installed)
+      - [Already Have Docker installed](#already-have-docker-installed)
+    - [Test](#test)
+    - [SetUp](#setup)
+  - [Clarification](#clarification)
 
 ---
 
@@ -107,6 +109,11 @@ install ngrok proxy:
 start ngrok proxy:
 
 ngrok http 8000
+```
+
+![image](ngrok.png)
+
+```bash
 
 finally add the displayed ngrok url as one of   
 your allowed host in your monnify/settings.py  
@@ -121,6 +128,35 @@ for function based views
 
 for class based views
 {your ngrok https url}/webhook_listener
+```
+---
+
+## Clarification
+
+![image](func_view.png)
+
+from the image above, it's important you receive the  
+ payload as bytes rather than as json that is converted  
+to bytes because during the conversion, some data in the  
+payload are reformatted(for example double quote   
+becomes single quote or vice versa, spaces are either added  
+between data or removed) and all these affects the final  
+hash.
+
+![image](hook.png)
+
+It's a security best practice to use  
+```python
+hmac.compare_digest rather than ==
+```  
+whenever you compare hashes, so as to prevent timing attacks (https://news.ycombinator.com/item?id=11119154)  
+
+---
+
+![image](ip.png)
+
+When verifying a webhook ip address, you should  check wether your   
+server is behind a proxy(like nginx)  as the IP coming to the server would be that of the proxy, so you should check what the forwarded IP is. (configured by you set by default) Otherwise(when not behind a proxy) the real ip belongs to the webhook.
 
 
 
