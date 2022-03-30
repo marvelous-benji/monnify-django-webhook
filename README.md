@@ -137,8 +137,7 @@ for class based views
 
 from the image above, it's important you receive the payload as bytes rather than as json that is converted  
 to bytes because during the conversion, some data in the payload are reformatted(for example double quote   
-becomes single quote or vice versa, spaces are either added between data or removed) and all these affects the final  
-hash.
+becomes single quote or vice versa, spaces are either added between data or removed) and all these affects the final hash.
 
 ![image](hook.png)
 
