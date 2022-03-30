@@ -1,5 +1,6 @@
 # monnify-django-webhook
-A sample code that show how to verify monnify webhook
+ This is a sample code that shows how to calculate and verify monnify webhook hash  
+using the Django web framework. Simillar ideas holds for other Python web frameworks
 
 ---
 
