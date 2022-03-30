@@ -2,7 +2,9 @@ FROM python:3.9-slim
 
 WORKDIR /app/
 
-COPY ../monify-django-webhook .
+COPY db.sqlite3 manage.py requirements.txt README.md .
+COPY webhook /app/webhook
+COPY monnify /app/monnify
 
 ARG MONNIFY_IP=35.242.133.146
 
