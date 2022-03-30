@@ -153,7 +153,7 @@ whenever you compare hashes, so as to prevent timing attacks (https://news.ycomb
 ![image](ip.png)
 
 When verifying a webhook ip address, you should  check wether your   
-server is behind a proxy(like nginx)  as the IP coming to the server would be that of the proxy, so you should check what the forwarded IP is. (configured by you set by default) Otherwise(when not behind a proxy) the real ip belongs to the webhook.
+server is behind a proxy(like nginx)  as the IP coming to the server would be that of the proxy, so you should check what the forwarded IP is. (configured by you or set by default) Otherwise(when not behind a proxy) the real ip belongs to the webhook.
 
 
 
