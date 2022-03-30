@@ -8,17 +8,19 @@ A sample code that show how to verify monnify webhook
 - [Technologies](#Technologies)
 - [Description](#Description)
 - [Installation](#Installation)
-- [Quickstart](#QuickStart)
+- [Test](#Test)
+- [SetUp](#SetUp)
 - [Clarification](#Clarification)
 - [Todo](#Todo)
 
 ---
 
 #### Technologies
+This sample code was built with python 3.9, but would also work on python 3.7 and above. 
 
-- Python
-- Django
-- DjangoRestFramework
+- Python==3.9
+- Django==3.2
+- DjangoRestFramework==3.13
   
 [Back To The Top](#read-me-template)
 
@@ -71,7 +73,54 @@ git clone https://github.com/marvelous-benji/monnify-django-webhook.git
 change to monnify-django-webhook directory:
 
 cd monnify-django-webhook
+
+build docker container:
+
+docker build -t mnfwebhook .
+
 ```
+---
+
+### Test
+After Installation, you can run tests by running
+```bash
+python manage.py test
+```
+---
+
+### SetUp
+After Installation, you will need to start the server.
+```bash
+Without docker simply run:
+
+python manage.py runserver
+
+with docker simply run:
+ 
+docker run -it --publish 8000:8000 mnfwebhook
+
+install ngrok proxy:
+
+(MacOs) brew install ngrok
+(Linux) sudo apt-get install ngrok
+
+start ngrok proxy:
+
+ngrok http 8000
+
+finally add the displayed ngrok url as one of   
+your allowed host in your monnify/settings.py  
+
+ALLOWED_HOST = ['{your ngrok https url}']
+
+Also on your monnify dashboard, go to settings,  
+then the webhook tab, add on any of the input  
+field:
+for function based views
+{your ngrok https url}/webhook_listen 
+
+for class based views
+{your ngrok https url}/webhook_listener
 
 
 

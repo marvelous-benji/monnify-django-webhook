@@ -29,7 +29,7 @@ class EnvironmentTest(TestCase):
 
 
 
-class HashTest(TestCase):
+class UtilsTest(TestCase):
 
     def test_hashing_function(self):
         payload_in_bytes = b"Monnify is cool"
@@ -41,3 +41,12 @@ class HashTest(TestCase):
         )
         your_hash_in_hex = your_hash_in_bytes.hexdigest()
         self.assertIs(verify_hash(payload_in_bytes,"59fec58247858a50bed5d21dfd8831c656525a02d61cbd4eb2820402c4257e8ee7b4ffda6d583c55a385ffe3413ed0d9ca2dcc207e8387dd2f04a921b06c8465"), True)
+
+    def test_ip_checker(self):
+        os.environ['MONNIFY_IP'] = '127.0.0.1'
+        self.assertEqual(os.getenv('MONNIFY_IP'),'127.0.0.1')
+
+
+class ViewTest(TestCase):
+
+    client = Client()
