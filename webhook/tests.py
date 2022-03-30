@@ -2,7 +2,8 @@ import os
 import hmac
 import hashlib
 
-from django.test import TestCase, Client
+from django.test import TestCase
+from rest_framework.test import APIClient
 from  django.urls import reverse
 
 from .views import verify_hash
@@ -28,6 +29,13 @@ class EnvironmentTest(TestCase):
         self.assertIsNot(os.getenv("MONNIFY_IP",None), None)
 
 
+def hasher(payload_in_bytes,secret_key_bytes):
+    your_hash_in_bytes = hmac.new(
+            secret_key_bytes, msg=payload_in_bytes, digestmod=hashlib.sha512
+        )
+    your_hash_in_hex = your_hash_in_bytes.hexdigest()
+    return your_hash_in_hex
+
 
 class UtilsTest(TestCase):
 
@@ -49,4 +57,13 @@ class UtilsTest(TestCase):
 
 class ViewTest(TestCase):
 
-    client = Client()
+    client = APIClient()
+    os.environ['MONNIFY_SECRET'] = "Monnify"
+    os.environ['MONNIFY_IP'] = '127.0.0.1'
+
+    def test_func_based_view(self):
+        url = reverse('process_webhook')
+        hash = hasher(b'{"status":True}', b'Monnify')
+        headers = {'MONNIFY-SIGNATURE':hash}
+        resp = self.client.post(url, headers=headers, format='json')
+        self.assertEqual(resp.status_code,200)
